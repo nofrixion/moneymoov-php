@@ -21,7 +21,7 @@ class PaymentRequest extends AbstractClient
         ?string $orderId = null,
 	    ?bool $createToken = false,
 	    ?string $customerId = null,
-	    ?bool $cardAuthorizeOnly = false.
+	    ?bool $cardAuthorizeOnly = false,
 	    bool $showBillingAddressSameAsShippingAddressCheckbox = false
     ): array {
         $url = $this->getApiUrl() . 'paymentrequests';
