@@ -28,18 +28,22 @@ class PaymentRequest extends AbstractClient
         $headers = $this->getRequestHeaders();
         $method = 'POST';
 
+        if(is_array($paymentMethodTypes)) {
+            $paymentMethodTypes = implode(',', $paymentMethodTypes);
+        }
+
         $body = http_build_query([
 	        'Amount' => $amount->__toString(),
 	        'Currency' => $currency,
 	        'OriginUrl' => $originUrl,
 	        'CallbackUrl' => $callbackUrl,
-	        'PaymentMethodTypes' => implode(',', $paymentMethodTypes),
+	        'PaymentMethodTypes' => $paymentMethodTypes,
 	        'OrderID' => $orderId,
 	        'CardCreateToken' => $createToken && $customerEmailAddress != "" ? 'true' : 'false',
 	        'CustomerID' => $customerId ?? '',
 	        'CardAuthorizeOnly' => $cardAuthorizeOnly ? 'true' : 'false',
 		'CustomerEmailAddress' => $customerEmailAddress,
-            	'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'true' : 'false'
+            	'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'false' : 'true'
         ]);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
