@@ -22,7 +22,8 @@ class PaymentRequest extends AbstractClient
 	    ?bool $createToken = false,
 	    ?string $customerId = null,
 	    ?bool $cardAuthorizeOnly = false,
-	    bool $showBillingAddressSameAsShippingAddressCheckbox = false
+	    bool $showBillingAddressSameAsShippingAddressCheckbox = false,
+        ?string $successWebHookUrl = null
     ): array {
         $url = $this->getApiUrl() . 'paymentrequests';
         $headers = $this->getRequestHeaders();
@@ -42,8 +43,9 @@ class PaymentRequest extends AbstractClient
 	        'CardCreateToken' => $createToken && $customerEmailAddress != "" ? 'true' : 'false',
 	        'CustomerID' => $customerId ?? '',
 	        'CardAuthorizeOnly' => $cardAuthorizeOnly ? 'true' : 'false',
-		'CustomerEmailAddress' => $customerEmailAddress,
-            	'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'false' : 'true'
+		    'CustomerEmailAddress' => $customerEmailAddress,
+            'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'false' : 'true',
+            'SuccessWebHookUrl' => $successWebHookUrl
         ]);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
