@@ -9,7 +9,7 @@ use NoFrixion\Util\PreciseNumber;
 class PaymentRequest extends AbstractClient
 {
 	/**
-	 * @seehttps://docs.nofrixion.com/reference/post_api-v1-paymentrequests
+	 * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests
 	 */
     public function createPaymentRequest(
 		string $originUrl,
