@@ -117,6 +117,24 @@ class PaymentRequest extends AbstractClient
 		}
 	}
 
+    /**
+     * @see https://docs.nofrixion.com/reference/get_api-v1-paymentrequests-getbyorderid-orderid
+     */
+    public function getPaymentRequestByOrderId(
+        string $orderId
+    ): array {
+        $url = $this->getApiUrl() . 'paymentrequests/getbyorderid/' . urlencode($orderId);
+        $headers = $this->getRequestHeaders();
+        $method = 'GET';
+        $response = $this->getHttpClient()->request($method, $url, $headers);
+
+        if ($response->getStatus() === 200) {
+            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } else {
+            throw $this->getExceptionByStatusCode($method, $url, $response);
+        }
+    }
+
 
 	/**
 	 * @see https://docs.nofrixion.com/reference/get_api-v1-paymentrequests-id-result
