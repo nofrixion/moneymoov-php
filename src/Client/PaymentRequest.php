@@ -217,5 +217,24 @@ class PaymentRequest extends AbstractClient
 			throw $this->getExceptionByStatusCode($method, $url, $response);
 		}
 	}
+
+    /**
+     * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests-id-card-voidpaymentrequest
+     */
+    public function voidAllPaymentsForPaymentRequest(string $paymentRequestId): array
+    {
+        $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId) . '/card/voidpaymentrequest';
+        $headers = $this->getRequestHeaders();
+        $method = 'POST';
+        $body = http_build_query([]);
+        $response = $this->getHttpClient()->request($method, $url, $headers, $body);
+
+        if (in_array($response->getStatus(), [200, 201])) {
+            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } else {
+            throw $this->getExceptionByStatusCode($method, $url, $response);
+        }
+    }
+
 }
 
