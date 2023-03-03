@@ -50,7 +50,7 @@ class PaymentRequest extends AbstractClient
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
-        if (in_array($response->getStatus(), [200, 201])) {
+        if (in_array($response->getStatus(), [200, 201], true)) {
             return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
@@ -92,7 +92,7 @@ class PaymentRequest extends AbstractClient
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
-        if (in_array($response->getStatus(), [200, 201])) {
+        if (in_array($response->getStatus(), [200, 201], true)) {
             return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
@@ -171,7 +171,7 @@ class PaymentRequest extends AbstractClient
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
-        if (in_array($response->getStatus(), [200, 201])) {
+        if (in_array($response->getStatus(), [200, 201], true)) {
             return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
@@ -212,7 +212,7 @@ class PaymentRequest extends AbstractClient
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
-        if (in_array($response->getStatus(), [200, 201])) {
+        if (in_array($response->getStatus(), [200, 201], true)) {
             return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
@@ -231,12 +231,10 @@ class PaymentRequest extends AbstractClient
         $body = http_build_query([]);
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
-        if (in_array($response->getStatus(), [200, 201])) {
+        if (in_array($response->getStatus(), [200, 201], true)) {
             return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
     }
-
 }
-
