@@ -48,18 +48,13 @@ class Webhook extends AbstractClient
         $headers = $this->getRequestHeaders();
         $method = 'GET';
 
+        $response = $this->getHttpClient()->request($method, $url, $headers);
 
-        try {
-            $response = $this->getHttpClient()->request($method, $url, $headers);
-
-            if ($response->getStatus() === 200) {
-                //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-                return $response->getBody();
-            } else {
-                throw $this->getExceptionByStatusCode($method, $url, $response);
-            }
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if ($response->getStatus() === 200) {
+            //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            return $response->getBody();
+        } else {
+            throw $this->getExceptionByStatusCode($method, $url, $response);
         }
     }
 
@@ -87,16 +82,12 @@ class Webhook extends AbstractClient
             'EmailAddress' => $emailAddress ?? ''
         ]);
 
-        try {
-            $response = $this->getHttpClient()->request($method, $url, $headers, $body);
-            if (in_array($response->getStatus(), [200, 201], true)) {
-                //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-                return $response->getBody();
-            } else {
-                throw $this->getExceptionByStatusCode($method, $url, $response);
-            }
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        $response = $this->getHttpClient()->request($method, $url, $headers, $body);
+        if (in_array($response->getStatus(), [200, 201], true)) {
+            //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            return $response->getBody();
+        } else {
+            throw $this->getExceptionByStatusCode($method, $url, $response);
         }
     }
 
