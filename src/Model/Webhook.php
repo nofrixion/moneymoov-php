@@ -69,6 +69,13 @@ class Webhook
             }
         }
     }
+
+    public function getSignature(string $secret, string $payload): string
+    {
+        $hexHash = hash_hmac('sha256', $payload, $secret);
+        $base64Hash = base64_encode(hex2bin($hexHash));
+        return $base64Hash;
+    }
 }
 
 //EOF
