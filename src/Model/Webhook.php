@@ -23,7 +23,7 @@ class Webhook
     /**
      * @param string|null $id Use 'null' when creating webhook, specify the id if updating.
      * @param string $merchantId
-     * @param string $type must be one of PAYIN|PAYOUT
+     * @param string $type must be one of PAYIN | PAYOUT
      * @param string $destinationUrl
      * @param bool|null $retry
      * @param string $secret
