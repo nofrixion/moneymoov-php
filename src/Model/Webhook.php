@@ -69,7 +69,12 @@ class Webhook
             }
         }
     }
-
+    /**
+     * getSignature - calculates HMAC signature for a received webhook.
+     * @param string $secret 
+     * @param string $payload Raw JSON from webhook body.
+     * @return string Base64 encoded version of the HMAC signature (as per 'x-moneymoov-signature' header in webhook)
+     */
     public static function getSignature(string $secret, string $payload): string
     {
         $hexHash = hash_hmac('sha256', $payload, $secret);
