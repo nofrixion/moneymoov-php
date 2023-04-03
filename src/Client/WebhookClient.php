@@ -18,9 +18,9 @@ class WebhookClient extends AbstractClient
      * @see https://docs.nofrixion.com/reference/post_api-v1-webhooks
      * @param Webhook $webhook
      * 
-     * @return array associative array of JSON response
+     * @return Webhook associative array of JSON response
      */
-    public function createWebhook(Webhook $webhook): array
+    public function createWebhook(Webhook $webhook): Webhook
     {
         $url = $this->getApiUrl() . 'webhooks';
         $headers = $this->getRequestHeaders();
@@ -38,8 +38,19 @@ class WebhookClient extends AbstractClient
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
         if (in_array($response->getStatus(), [200, 201], true)) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-            //return $response->getBody();
+            $webhook = new Webhook(
+                // 'id' can only be null when using 'createWebhook' method.
+                $response['id'],
+                $$webhook->merchantId,
+                $response['type'],
+                $response['destinationUrl'],
+                $response['retry'] ?? null,
+                $response['secret'],
+                $response['isActive'] ?? null,
+                $response['emailAddress'] ?? null
+            );
+            //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            return $webhook;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
