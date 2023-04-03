@@ -38,16 +38,17 @@ class WebhookClient extends AbstractClient
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
         if (in_array($response->getStatus(), [200, 201], true)) {
+            $responseArray = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
             $webhook = new Webhook(
                 // 'id' can only be null when using 'createWebhook' method.
-                $response['id'],
+                $responseArray['id'],
                 $$webhook->merchantId,
-                $response['type'],
-                $response['destinationUrl'],
-                $response['retry'] ?? null,
-                $response['secret'],
-                $response['isActive'] ?? null,
-                $response['emailAddress'] ?? null
+                $responseArray['type'],
+                $responseArray['destinationUrl'],
+                $responseArray['retry'] ?? null,
+                $responseArray['secret'],
+                $responseArray['isActive'] ?? null,
+                $responseArray['emailAddress'] ?? null
             );
             //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
             return $webhook;
