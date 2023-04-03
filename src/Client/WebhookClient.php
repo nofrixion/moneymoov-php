@@ -47,7 +47,6 @@ class WebhookClient extends AbstractClient
 
     /**
      * @see https://docs.nofrixion.com/reference/get_api-v1-webhooks-merchantid
-     * @todo convert return values to an array of NoFrixion\Model\Webhook
      */
     public function getWebhooks(string $merchantId): array
     {
@@ -59,7 +58,7 @@ class WebhookClient extends AbstractClient
         $response = $this->getHttpClient()->request($method, $url, $headers);
 
         if ($response->getStatus() === 200) {
-            // $response is an indexed array of internal arrays, each one representing a webhook.
+            // $responses is an indexed array of associative arrays, each one representing a webhook.
             $responses = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
             foreach ($responses as $responseItem) {
                 $webhook = new Webhook(
