@@ -42,7 +42,7 @@ class WebhookClient extends AbstractClient
             $webhook = new Webhook(
                 // 'id' can only be null when using 'createWebhook' method.
                 $responseArray['id'],
-                $$webhook->merchantId,
+                $webhook->merchantId,
                 $responseArray['type'],
                 $responseArray['destinationUrl'],
                 $responseArray['retry'] ?? null,
@@ -96,7 +96,7 @@ class WebhookClient extends AbstractClient
     /**
      * @see https://docs.nofrixion.com/reference/put_api-v1-webhooks-id
      */
-    public function updateWebhook(Webhook $webhook): array
+    public function updateWebhook(Webhook $webhook): Webhook
     {
         if (!is_null($webhook->id)) {
             $url = $this->getApiUrl() . 'webhooks/' . $webhook->id;
@@ -118,8 +118,20 @@ class WebhookClient extends AbstractClient
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
         if (in_array($response->getStatus(), [200, 201], true)) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-            //return $response->getBody();
+            $responseArray = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $webhook = new Webhook(
+                // 'id' can only be null when using 'createWebhook' method.
+                $responseArray['id'],
+                $webhook->merchantId,
+                $responseArray['type'],
+                $responseArray['destinationUrl'],
+                $responseArray['retry'] ?? null,
+                $responseArray['secret'],
+                $responseArray['isActive'] ?? null,
+                $responseArray['emailAddress'] ?? null
+            );
+            //return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            return $webhook;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
