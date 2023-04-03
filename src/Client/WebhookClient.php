@@ -18,7 +18,7 @@ class WebhookClient extends AbstractClient
      * @see https://docs.nofrixion.com/reference/post_api-v1-webhooks
      * @param Webhook $webhook
      * 
-     * @return Webhook associative array of JSON response
+     * @return Webhook
      */
     public function createWebhook(Webhook $webhook): Webhook
     {
@@ -59,6 +59,9 @@ class WebhookClient extends AbstractClient
 
     /**
      * @see https://docs.nofrixion.com/reference/get_api-v1-webhooks-merchantid
+     * @param string $merchantId The merchant Id for whom to retrieve webhooks
+     * 
+     * @return array An array of Webhook objects
      */
     public function getWebhooks(string $merchantId): array
     {
@@ -95,6 +98,9 @@ class WebhookClient extends AbstractClient
 
     /**
      * @see https://docs.nofrixion.com/reference/put_api-v1-webhooks-id
+     * @param Webhook $webhook The Id of the webhook to be updated
+     * 
+     * @return Webhook
      */
     public function updateWebhook(Webhook $webhook): Webhook
     {
