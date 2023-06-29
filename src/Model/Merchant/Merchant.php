@@ -62,7 +62,7 @@ class Merchant
      * @var string
      * @todo investigate DateTime or numeric type for compatibility
      */
-    public string $inserted; 
+    public string $inserted;
     /**
      * The jurisdiction the merchant entity is incorporated or established in.
      * @var string
@@ -78,7 +78,7 @@ class Merchant
      * To increase the limit contact support.
      * @var int
      */
-    public int $webhookLimit;
+    public ?int $webhookLimit;
     /**
      * Indicates if a QR Code containing the payment link should be displayed
      * on the hosted payment page.
@@ -107,6 +107,43 @@ class Merchant
      */
     public array $paymentAccounts;
 
+    function __construct(
+        string $id,
+        ?string $name,
+        bool $enabled,
+        ?string $companyId,
+        string $merchantCategoryCode,
+        ?string $shortName,
+        ?string $tradingName,
+        int $paymentAccountLimit,
+        ?string $inserted,
+        string $jurisdiction,
+        int $hostedPayVersion,
+        ?int $webhookLimit,
+        bool $displayQrOnHostedPay,
+        string $yourRole,
+        array $userRoles,
+        array $tags,
+        array $paymentAccounts
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->enabled = $enabled;
+        $this->companyId = $companyId;
+        $this->merchantCategoryCode = $merchantCategoryCode;
+        $this->shortName = $shortName;
+        $this->tradingName = $tradingName;
+        $this->paymentAccountLimit = $paymentAccountLimit;
+        $this->inserted = $inserted;
+        $this->jurisdiction = $jurisdiction;
+        $this->hostedPayVersion = $hostedPayVersion;
+        $this->webhookLimit = $webhookLimit;
+        $this->displayQrOnHostedPay = $displayQrOnHostedPay;
+        $this->yourRole = $yourRole;
+        $this->userRoles = $userRoles;
+        $this->tags = $tags;
+        $this->paymentAccounts = $paymentAccounts;
+    }
 
 }
 

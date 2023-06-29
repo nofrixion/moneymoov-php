@@ -28,8 +28,8 @@ class MerchantPayByBankSettings
      * @param mixed $payByBankSettings
      */
     public function __construct(
-        $merchantId,
-        $payByBankSettings
+        string $merchantId,
+        array $payByBankSettings
     ) {
         $this->merchantId = $merchantId;
         $this->$payByBankSettings = $payByBankSettings;
