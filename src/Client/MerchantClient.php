@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace NoFrixion\Client;
 
-use NoFrixion\Client\AbstractClient;
 use NoFrixion\Model\Merchant\Merchant;
 use NoFrixion\Model\Merchant\MerchantPayByBankSetting;
 use NoFrixion\Model\Merchant\MerchantPayByBankSettings;
