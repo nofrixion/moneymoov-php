@@ -9,12 +9,18 @@ use Nofrixion\Model\Merchant\MerchantPayByBankSetting;
 use Nofrixion\Model\Merchant\MerchantPayByBankSettings;
 use \RuntimeException;
 
+
 /**
- * Webhook: provides convenient PHP access to the MoneyMoov API 'webhook' endpoints.
+ * MerchantClient enables calls to MoneyMoov API `merchant/` endpoints
  */
 class MerchantClient extends AbstractClient
 {
 
+    /**
+     * getMerchantPayByBankSettings returns an array of MerchantPayByBankSetting objects.
+     * @param string $merchantId
+     * @return array 
+     */
     public function getMerchantPayByBankSettings(string $merchantId): array
     {
         $url = $this->getApiUrl() . 'merchants/' . $merchantId . '/banksettings';
@@ -52,6 +58,10 @@ class MerchantClient extends AbstractClient
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
     }
+    /**
+     * whoAmIMerchant returns details of the merchant that was issued the API token used in the request.
+     * @return \Nofrixion\Model\Merchant\Merchant
+     */
     public function whoAmIMerchant(): Merchant
     {
         $url = $this->getApiUrl() . 'metadata/whoamimerchant';
