@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Http;
+namespace Nofrixion\Http;
 
-use NoFrixion\Exception\ConnectException;
+use Nofrixion\Exception\ConnectException;
 
 /**
  * HTTP Client using cURL to communicate.

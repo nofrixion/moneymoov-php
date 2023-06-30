@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Client;
+namespace Nofrixion\Client;
 
-use NoFrixion\Util\PreciseNumber;
+use Nofrixion\Util\PreciseNumber;
 
 class PaymentRequest extends AbstractClient
 {

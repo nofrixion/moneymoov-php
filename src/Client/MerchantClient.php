@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Client;
+namespace Nofrixion\Client;
 
-use NoFrixion\Model\Merchant\Merchant;
-use NoFrixion\Model\Merchant\MerchantPayByBankSetting;
-use NoFrixion\Model\Merchant\MerchantPayByBankSettings;
+use Nofrixion\Model\Merchant\Merchant;
+use Nofrixion\Model\Merchant\MerchantPayByBankSetting;
+use Nofrixion\Model\Merchant\MerchantPayByBankSettings;
 use \RuntimeException;
 
 /**

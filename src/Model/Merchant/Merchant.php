@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Model\Merchant;
+namespace Nofrixion\Model\Merchant;
 
 use \RuntimeException;
 

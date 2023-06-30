@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Model;
+namespace Nofrixion\Model;
 
 use \RuntimeException;
 

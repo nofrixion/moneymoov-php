@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Util;
+namespace Nofrixion\Util;
 
 class PreciseNumber
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Exception;
+namespace Nofrixion\Exception;
 
-class NoFrixionException extends \RuntimeException
+class NofrixionException extends \RuntimeException
 {
     public function __construct(string $message, int $code, \Throwable $previous = null)
     {

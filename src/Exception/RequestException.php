@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Exception;
+namespace Nofrixion\Exception;
 
-use NoFrixion\Http\ResponseInterface;
+use Nofrixion\Http\ResponseInterface;
 
-class RequestException extends NoFrixionException
+class RequestException extends NofrixionException
 {
     public function __construct(string $method, string $url, ResponseInterface $response)
     {

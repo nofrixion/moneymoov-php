@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Client;
+namespace Nofrixion\Client;
 
-use NoFrixion\Client\AbstractClient;
-use NoFrixion\Model\Webhook;
+use Nofrixion\Client\AbstractClient;
+use Nofrixion\Model\Webhook;
 use \RuntimeException;
 
 /**
