@@ -15,14 +15,11 @@ use \RuntimeException;
 class MerchantClient extends AbstractClient
 {
 
-    public function getMerchantPayByBankSettings(string $merchantId): MerchantPayByBankSettings
+    public function getMerchantPayByBankSettings(string $merchantId): array
     {
-        xdebug_break();
-        
         $url = $this->getApiUrl() . 'merchants/' . $merchantId . '/banksettings';
         $headers = $this->getRequestHeaders();
         $method = 'GET';
-        // $webhookArray = array();
 
         $response = $this->getHttpClient()->request($method, $url, $headers);
 
@@ -46,11 +43,11 @@ class MerchantClient extends AbstractClient
                 );
                 array_push($payByBankSettingsArray, $payByBankSetting);
             }
-            $merchantPayByBankSettings = new MerchantPayByBankSettings(
-                $response['merchantID'], 
-                $payByBankSettingsArray
-            );
-            return $merchantPayByBankSettings;
+            // $merchantPayByBankSettings = new MerchantPayByBankSettings(
+            //     $response['merchantID'], 
+            //     $payByBankSettingsArray
+            // );
+            return $payByBankSettingsArray;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }

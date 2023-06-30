@@ -24,8 +24,8 @@ class MerchantPayByBankSettings
 
     /**
      * Constructor for model
-     * @param mixed $merchantId
-     * @param mixed $payByBankSettings
+     * @param string $merchantId
+     * @param array $payByBankSettings
      */
     public function __construct(
         string $merchantId,
