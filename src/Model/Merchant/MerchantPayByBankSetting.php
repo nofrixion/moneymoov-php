@@ -11,6 +11,8 @@ use \RuntimeException;
  */
 class MerchantPayByBankSetting
 {
+    private const logoUrlPrefix = 'https://cdn.nofrixion.com/nextgen/assets/banks/';
+
     /**
      * ID of the bank to be configured for the merchant.
      * @var string
@@ -91,7 +93,7 @@ class MerchantPayByBankSetting
         $this->bankId = $bankId;
         $this->bankName = $bankName;
         $this->order = $order;
-        $this->logo = $logo;
+        $this->logo = self::logoUrlPrefix . $logo;
         $this->currency = $currency;
         $this->processor = $processor;
         $this->personalInstitutionID = $personalInstitutionID;
