@@ -6,7 +6,7 @@ namespace Nofrixion\Client;
 
 use Nofrixion\Util\PreciseNumber;
 
-class PaymentRequest extends AbstractClient
+class PaymentRequestClient extends AbstractClient
 {
     /**
      * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests
