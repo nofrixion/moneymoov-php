@@ -28,7 +28,7 @@ class PreciseNumber
         }
     }
 
-    private function __construct(string $value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }
