@@ -7,6 +7,7 @@ namespace Nofrixion\Client;
 use Nofrixion\Exception\BadRequestException;
 use Nofrixion\Exception\ForbiddenException;
 use Nofrixion\Exception\RequestException;
+use Nofrixion\Exception\NofrixionException;
 use Nofrixion\Http\ClientInterface;
 use Nofrixion\Http\CurlClient;
 use Nofrixion\Http\Response;
