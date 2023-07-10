@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Nofrixion\Exception;
 
 /**
- * Summary of NofrixionException
+ * NofrixionException
  */
 class NofrixionException extends \RuntimeException
 {
