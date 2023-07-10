@@ -172,7 +172,7 @@ class PaymentRequestClient extends AbstractClient
         $response = $this->getHttpClient()->request($method, $url, $headers);
         $body = http_build_query([
             'ProviderID' => $bankId,
-            'PartialAmount' => $amount->__toString(),
+            'PartialAmount' => $amount->__toString() ?? null,
             'RedirectToOriginUrl' => null
             // not clear if other fields are optional or not.
         ]);
