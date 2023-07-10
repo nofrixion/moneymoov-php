@@ -163,14 +163,17 @@ class PaymentRequestClient extends AbstractClient
      */
     public function initiatePayByBank(
         string $paymentRequestId,
-        string $bankId
+        string $bankId,
+        ?string $amount
     ): PaymentInitiationResponse {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId) . '/pisp';
         $headers = $this->getRequestHeaders();
         $method = 'POST';
         $response = $this->getHttpClient()->request($method, $url, $headers);
         $body = http_build_query([
-            'ProviderID' => $bankId
+            'ProviderID' => $bankId,
+            'PartialAmount' => $amount,
+            'RedirectToOriginUrl' => null
             // not clear if other fields are optional or not.
         ]);
 
