@@ -73,25 +73,25 @@ class MerchantClient extends AbstractClient
 
         if ($response->getStatus() === 200) {
             // $response is an associative array representing the merchant.
-            $body = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $responseBody = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
             $merchant = new Merchant(
-                $body['id'],
-                $body['name'] ?? null,
-                $body['enabled'],
-                $body['companyId'] ?? null,
-                $body['merchantCategoryCode'],
-                $body['shortName'] ?? null,
-                $body['tradingName'] ?? null,
-                $body['paymentAccountLimit'],
-                $body['inserted'],
-                $body['jurisdiction'],
-                $body['hostedPayVersion'],
-                $body['webhookLimit'] ?? null,
-                $body['displayQrOnHostedPay'],
-                $body['yourRole'],
-                $body['userRoles'],
-                $body['tags'],
-                $body['paymentAccounts']
+                $responseBody['id'],
+                $responseBody['name'] ?? null,
+                $responseBody['enabled'],
+                $responseBody['companyId'] ?? null,
+                $responseBody['merchantCategoryCode'],
+                $responseBody['shortName'] ?? null,
+                $responseBody['tradingName'] ?? null,
+                $responseBody['paymentAccountLimit'],
+                $responseBody['inserted'],
+                $responseBody['jurisdiction'],
+                $responseBody['hostedPayVersion'],
+                $responseBody['webhookLimit'] ?? null,
+                $responseBody['displayQrOnHostedPay'],
+                $responseBody['yourRole'],
+                $responseBody['userRoles'],
+                $responseBody['tags'],
+                $responseBody['paymentAccounts']
             );
             return $merchant;
         } else {
