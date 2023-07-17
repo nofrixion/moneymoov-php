@@ -6,7 +6,6 @@ namespace Nofrixion\Client;
 
 use Nofrixion\Model\Merchant\Merchant;
 use Nofrixion\Model\Merchant\MerchantPayByBankSetting;
-use Nofrixion\Model\Merchant\MerchantPayByBankSettings;
 use \RuntimeException;
 
 
