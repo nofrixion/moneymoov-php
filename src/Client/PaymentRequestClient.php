@@ -59,6 +59,24 @@ class PaymentRequestClient extends AbstractClient
     }
 
     /**
+     * @see https://docs.nofrixion.com/reference/delete_api-v1-paymentrequests-id
+     */
+    public function deletePaymentRequest(
+        string $paymentRequestId
+    ): array {
+        $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId);
+        $headers = $this->getRequestHeaders();
+        $method = 'DELETE';
+        $response = $this->getHttpClient()->request($method, $url, $headers);
+
+        if ($response->getStatus() === 200) {
+            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } else {
+            throw $this->getExceptionByStatusCode($method, $url, $response);
+        }
+    }
+
+    /**
      * @see https://docs.nofrixion.com/reference/put_api-v1-paymentrequests-id
      */
     public function updatePaymentRequest(
@@ -246,6 +264,7 @@ class PaymentRequestClient extends AbstractClient
 
     /**
      * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests-id-pisp
+     * @deprecated 2.0.0 No longer used by internal code and not recommended.
      */
     public function submitPaymentInitiationRequest(
         string $paymentRequestId,
