@@ -182,6 +182,7 @@ class PaymentRequestClient extends AbstractClient
     public function initiatePayByBank(
         string $paymentRequestId,
         string $bankId,
+        ?string $redirectToOriginUrl,
         ?PreciseNumber $amount
     ): PaymentInitiationResponse {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId) . '/pisp';
@@ -194,9 +195,8 @@ class PaymentRequestClient extends AbstractClient
         }
         $body = http_build_query([
             'ProviderID' => $bankId,
-            // not clear if these fields are optional or not.
             'PartialAmount' => $amount,
-            'RedirectToOriginUrl' => null
+            'RedirectToOriginUrl' => $redirectToOriginUrl
         ]);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
