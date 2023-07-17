@@ -17,7 +17,7 @@ class PaymentInitiationResponse
      */
     public ?string $paymentInitiationId;
     /**
-     * A redirect URL for the user to authorise the payment initiation request at the ASPSP
+     * A redirect URL for the user to authorize the payment initiation request at the ASPSP
      * @var string | null 
      */
     public ?string $redirectUrl;

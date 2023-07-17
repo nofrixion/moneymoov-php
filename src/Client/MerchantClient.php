@@ -23,6 +23,8 @@ class MerchantClient extends AbstractClient
      */
     public function getMerchantPayByBankSettings(string $merchantId): array
     {
+        xdebug_break();
+        
         $url = $this->getApiUrl() . 'merchants/' . $merchantId . '/banksettings';
         $headers = $this->getRequestHeaders();
         $method = 'GET';
