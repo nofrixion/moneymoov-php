@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Exception;
+namespace Nofrixion\Exception;
 
-class ConnectException extends NoFrixionException
+use Nofrixion\Exception\NofrixionException;
+
+class ConnectException extends NofrixionException
 {
     public function __construct(string $curlErrorMessage, int $curlErrorCode)
     {

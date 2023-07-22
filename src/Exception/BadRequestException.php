@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NoFrixion\Exception;
+namespace Nofrixion\Exception;
 
 class BadRequestException extends RequestException
 {
