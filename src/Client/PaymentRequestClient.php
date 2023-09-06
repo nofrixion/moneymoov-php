@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Nofrixion\Client;
 
 use Nofrixion\Model\PaymentRequests\PaymentInitiationResponse;
+use Nofrixion\Model\PaymentRequests\PaymentRequest;
+use Nofrixion\Model\PaymentRequests\PaymentRequestCreate;
 use Nofrixion\Util\PreciseNumber;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class PaymentRequestClient extends AbstractClient
 {
@@ -13,41 +17,12 @@ class PaymentRequestClient extends AbstractClient
      * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests
      */
     public function createPaymentRequest(
-        string $originUrl,
-        string $callbackUrl,
-        PreciseNumber $amount,
-        string $customerEmailAddress,
-        ?string $currency = null,
-        ?array $paymentMethodTypes = null,
-        ?string $orderId = null,
-        ?bool $createToken = false,
-        ?string $customerId = null,
-        ?bool $cardAuthorizeOnly = false,
-        bool $showBillingAddressSameAsShippingAddressCheckbox = false,
-        ?string $successWebHookUrl = null
+        PaymentRequestCreate $paymentRequest
     ): array {
         $url = $this->getApiUrl() . 'paymentrequests';
         $headers = $this->getRequestHeaders();
         $method = 'POST';
-
-        if (is_array($paymentMethodTypes)) {
-            $paymentMethodTypes = implode(',', $paymentMethodTypes);
-        }
-
-        $body = http_build_query([
-            'Amount' => $amount->__toString(),
-            'Currency' => $currency,
-            'OriginUrl' => $originUrl,
-            'CallbackUrl' => $callbackUrl,
-            'PaymentMethodTypes' => $paymentMethodTypes,
-            'OrderID' => $orderId,
-            'CardCreateToken' => $createToken && $customerEmailAddress != "" ? 'true' : 'false',
-            'CustomerID' => $customerId ?? '',
-            'CardAuthorizeOnly' => $cardAuthorizeOnly ? 'true' : 'false',
-            'CustomerEmailAddress' => $customerEmailAddress,
-            'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'false' : 'true',
-            'SuccessWebHookUrl' => $successWebHookUrl
-        ]);
+        $body = http_build_query($paymentRequest);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
