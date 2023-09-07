@@ -9,10 +9,10 @@ use Ramsey\Uuid\UuidInterface;
 
 class PaymentRequestAddress
 {
-    public ?UuidInterface $id;
-    public ?UuidInterface $paymentRequestID;
+    public ?string $id;
+    public ?string $paymentRequestID;
     /**
-     * Unknown Shipping Billing
+     * @var string Address type: Unknown | Shipping | Billing
      */
     public ?string $addressType;
     public ?string $firstName;
@@ -25,7 +25,14 @@ class PaymentRequestAddress
     public ?string $addressCountryCode;
     public ?string $phone;
     public ?string $email;
-    public ?DateTimeInterface $inserted;
-    public ?DateTimeInterface $lastUpdated;
-    
+    public ?string $inserted;
+    public ?string $lastUpdated;
+
+    public function __construct(
+        ?array $addressFields
+    ) {
+        foreach ($addressFields as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
 }

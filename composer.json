@@ -27,8 +27,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
-    "ext-bcmath": "*",
-    "ramsey/uuid": "^4.7"
+    "ext-bcmath": "*"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.14",

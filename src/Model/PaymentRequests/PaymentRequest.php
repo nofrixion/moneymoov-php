@@ -2,15 +2,16 @@
 
 namespace Nofrixion\Model\PaymentRequests;
 
-use DateTimeInterface;
-use Nofrixion\Model\Merchant\Merchant;
+use Nofrixion\Model\PaymentRequests\PaymentRequestAddress;
 use Nofrixion\Model\PaymentRequests\PaymentRequestResult;
-use Ramsey\Uuid\UuidInterface;
 
+/**
+ * PaymentRequest - class for storing payment requests returned in MoneyMoov API response body.
+ */
 class PaymentRequest
 {
-    public UuidInterface $id;
-    public UuidInterface $merchantID;
+    public string $id;
+    public string $merchantID;
     public string $amount;
     /** 
      * @var string Currency type: NONE | GBP | EUR | LBTC | BTC
@@ -23,7 +24,7 @@ class PaymentRequest
      */
     public ?string $paymentMethodTypes;
     public ?string $description;
-    public ?UuidInterface $pispAccountID;
+    public ?string $pispAccountID;
     public ?string $baseOriginUrl;
     public ?string $callbackUrl;
     public ?string $successWebHookUrl;
@@ -51,23 +52,25 @@ class PaymentRequest
      * @var string Partial payment method: None | Partial
      */
     public ?string $partialPaymentMethod;
-    public ?DateTimeInterface $inserted;
+    public ?string $inserted;
     public ?string $insertedSortable;
-    public ?DateTimeInterface $lastUpdated;
-    public bool $UseHostedPaymentPage = false;
+    public ?string $lastUpdated;
+    public bool $useHostedPaymentPage = false;
     public ?string $customerEmailAddress;
     public ?string $cardStripePaymentIntentID;
     public ?string $cardStripePaymentIntentSecret;
 
-    /** @var list<PaymentRequestAddress> */
+    /** 
+     * @var array<PaymentRequestAddress>
+     */
     public ?array $addresses;
     public ?array $events;
     public ?array $tokenisedCards;
     public ?array $transactions;
     public ?array $tags;
-    public PaymentRequestResult $result;
+    public ?PaymentRequestResult $result;
     public ?string $jwk;
-    public ?UuidInterface $priorityBankID;
+    public ?string $priorityBankID;
     public ?string $title;
     public ?string $partialPaymentSteps;
     public ?PaymentRequestAddress $shippingAddress;
@@ -75,9 +78,39 @@ class PaymentRequest
     public ?array $paymentAttempts;
 
     public ?string $failureCallbackUrl;
-    public ?Merchant $merchant;
-    public ?float $amountReceived;
-    public ?float $amountRefunded;
-    public ?float $amountPending;
+    public ?string $amountReceived;
+    public ?string $amountRefunded;
+    public ?string $amountPending;
 
+    public function __construct(
+        string $responseBody
+    ) {
+        $json = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
+
+        foreach ($json as $key => $value) {
+            switch ($key) {
+                case "addresses":
+                    /**  @ TODO convert this address array to array<PaymentRequestAddress> objects */
+                    $this->addresses = $value;
+                    break;
+                case "result":
+                    $this->result = new PaymentRequestResult(
+                        $value['paymentRequestID'],
+                        $value['amount'],
+                        $value['currency'],
+                        $value['result'],
+                        $value['requestedAmount'],
+                        $value['payments'],
+                        $value['pispAuthorizations'],
+                        $value['customerID']
+                    );
+                    break;
+                case "shippingAddress":
+                    $this->shippingAddress = new PaymentRequestAddress($value);
+                    break;
+                default:
+                    $this->{$key} = $value;
+            }
+        }
+    }
 }
