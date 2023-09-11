@@ -1,4 +1,5 @@
 /.idea
 /vendor
-test/
+/.vscode/
+/test/
 *.code-workspace
