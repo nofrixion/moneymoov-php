@@ -19,7 +19,7 @@ class PaymentRequestClient extends AbstractClient
         PaymentRequestCreate $paymentRequest
     ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests';
-        $headers = $this->getRequestHeaders();
+        $headers = $this->getRequestHeaders(true);
         $method = 'POST';
         //$body = http_build_query($paymentRequest);
         $body = json_encode($paymentRequest);
@@ -60,7 +60,7 @@ class PaymentRequestClient extends AbstractClient
         PaymentRequestUpdate $paymentRequest
     ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId);
-        $headers = $this->getRequestHeaders();
+        $headers = $this->getRequestHeaders(true);
         $method = 'PUT';
 
         //$body = http_build_query($paymentRequest);
