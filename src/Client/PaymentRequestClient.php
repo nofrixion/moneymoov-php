@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Nofrixion\Client;
 
 use Nofrixion\Model\PaymentRequests\PaymentInitiationResponse;
+use Nofrixion\Model\PaymentRequests\PaymentRequest;
+use Nofrixion\Model\PaymentRequests\PaymentRequestCreate;
+use Nofrixion\Model\PaymentRequests\PaymentRequestUpdate;
 use Nofrixion\Util\PreciseNumber;
 
 class PaymentRequestClient extends AbstractClient
@@ -13,46 +16,19 @@ class PaymentRequestClient extends AbstractClient
      * @see https://docs.nofrixion.com/reference/post_api-v1-paymentrequests
      */
     public function createPaymentRequest(
-        string $originUrl,
-        string $callbackUrl,
-        PreciseNumber $amount,
-        string $customerEmailAddress,
-        ?string $currency = null,
-        ?array $paymentMethodTypes = null,
-        ?string $orderId = null,
-        ?bool $createToken = false,
-        ?string $customerId = null,
-        ?bool $cardAuthorizeOnly = false,
-        bool $showBillingAddressSameAsShippingAddressCheckbox = false,
-        ?string $successWebHookUrl = null
-    ): array {
+        PaymentRequestCreate $paymentRequest
+    ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests';
-        $headers = $this->getRequestHeaders();
+        $headers = $this->getRequestHeaders(true);
         $method = 'POST';
-
-        if (is_array($paymentMethodTypes)) {
-            $paymentMethodTypes = implode(',', $paymentMethodTypes);
-        }
-
-        $body = http_build_query([
-            'Amount' => $amount->__toString(),
-            'Currency' => $currency,
-            'OriginUrl' => $originUrl,
-            'CallbackUrl' => $callbackUrl,
-            'PaymentMethodTypes' => $paymentMethodTypes,
-            'OrderID' => $orderId,
-            'CardCreateToken' => $createToken && $customerEmailAddress != "" ? 'true' : 'false',
-            'CustomerID' => $customerId ?? '',
-            'CardAuthorizeOnly' => $cardAuthorizeOnly ? 'true' : 'false',
-            'CustomerEmailAddress' => $customerEmailAddress,
-            'IgnoreAddressVerification' => $showBillingAddressSameAsShippingAddressCheckbox ? 'false' : 'true',
-            'SuccessWebHookUrl' => $successWebHookUrl
-        ]);
+        //$body = http_build_query($paymentRequest);
+        $body = json_encode($paymentRequest);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
         if (in_array($response->getStatus(), [200, 201], true)) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $paymentRequest = new PaymentRequest($response->getBody());
+            return $paymentRequest;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
@@ -63,14 +39,14 @@ class PaymentRequestClient extends AbstractClient
      */
     public function deletePaymentRequest(
         string $paymentRequestId
-    ): array {
+    ): bool {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId);
         $headers = $this->getRequestHeaders();
         $method = 'DELETE';
         $response = $this->getHttpClient()->request($method, $url, $headers);
 
         if ($response->getStatus() === 200) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            return true;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
@@ -81,38 +57,21 @@ class PaymentRequestClient extends AbstractClient
      */
     public function updatePaymentRequest(
         string $paymentRequestId,
-        string $originUrl,
-        string $callbackUrl,
-        PreciseNumber $amount,
-        ?string $currency = null,
-        ?array $paymentMethodTypes = null,
-        ?string $orderId = null,
-        ?bool $createToken = false,
-        ?string $customerId = null,
-        ?bool $cardAuthorizeOnly = false,
-        ?string $customerEmailAddress = null
-    ): array {
+        PaymentRequestUpdate $paymentRequest
+    ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId);
-        $headers = $this->getRequestHeaders();
+        $headers = $this->getRequestHeaders(true);
         $method = 'PUT';
 
-        $body = http_build_query([
-            'Amount' => $amount->__toString(),
-            'Currency' => $currency,
-            'OriginUrl' => $originUrl,
-            'CallbackUrl' => $callbackUrl,
-            'PaymentMethodTypes' => implode(',', $paymentMethodTypes),
-            //'OrderID' => $orderId,
-            'CardCreateToken' => $createToken && $customerEmailAddress !== "" && $customerEmailAddress !== null ? 'true' : 'false',
-            'CustomerID' => $customerId ?? '',
-            'CardAuthorizeOnly' => $cardAuthorizeOnly ? 'true' : 'false',
-            'CustomerEmailAddress' => $customerEmailAddress
-        ]);
+        //$body = http_build_query($paymentRequest);
+        $body = json_encode($paymentRequest);
 
         $response = $this->getHttpClient()->request($method, $url, $headers, $body);
 
         if (in_array($response->getStatus(), [200, 201], true)) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            // return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $paymentRequest = new PaymentRequest($response->getBody());
+            return $paymentRequest;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
@@ -123,14 +82,16 @@ class PaymentRequestClient extends AbstractClient
      */
     public function getPaymentRequest(
         string $paymentRequestId
-    ): array {
+    ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId);
         $headers = $this->getRequestHeaders();
         $method = 'GET';
         $response = $this->getHttpClient()->request($method, $url, $headers);
 
         if ($response->getStatus() === 200) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            // return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $paymentRequest = new PaymentRequest($response->getBody());
+            return $paymentRequest;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
@@ -141,14 +102,16 @@ class PaymentRequestClient extends AbstractClient
      */
     public function getPaymentRequestByOrderId(
         string $orderId
-    ): array {
+    ): PaymentRequest {
         $url = $this->getApiUrl() . 'paymentrequests/getbyorderid/' . urlencode($orderId);
         $headers = $this->getRequestHeaders();
         $method = 'GET';
         $response = $this->getHttpClient()->request($method, $url, $headers);
 
         if ($response->getStatus() === 200) {
-            return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            // return json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            $paymentRequest = new PaymentRequest($response->getBody());
+            return $paymentRequest;
         } else {
             throw $this->getExceptionByStatusCode($method, $url, $response);
         }
@@ -175,9 +138,6 @@ class PaymentRequestClient extends AbstractClient
 
     /**
      * initiatePayByBank - Submits a payment initiation request.
-     * @param string $paymentRequestId
-     * @param string $bankId
-     * @return \Nofrixion\Model\PaymentRequests\PaymentInitiationResponse
      */
     public function initiatePayByBank(
         string $paymentRequestId,

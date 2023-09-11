@@ -55,11 +55,19 @@ class AbstractClient
         return $this->httpClient;
     }
 
-    protected function getRequestHeaders(): array
+    /**
+     * @param bool $sendJson Set true to set 'Content-Type = application/json'
+     */
+    protected function getRequestHeaders(bool $sendJson = false): array
     {
+        $contentType = 'application/x-www-form-urlencoded';
+        if ($sendJson){
+            $contentType = 'application/json';
+        }
+
         return [
             'Accept' => 'application/json',
-            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Content-Type' => $contentType,
             'Authorization' => 'Bearer ' . $this->getApiKey()
         ];
     }
