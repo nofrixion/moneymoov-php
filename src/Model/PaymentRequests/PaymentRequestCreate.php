@@ -7,8 +7,8 @@ namespace Nofrixion\Model\PaymentRequests;
 use Nofrixion\Util\PreciseNumber;
 
 /**
- * PaymentRequestCreate - use to create payment request, at minimum amount, currency and paymentMethodTypes
- *  must be set in constructor. Other properties can be assigned direclty.
+ * PaymentRequestCreate - use to create payment request.
+ *  `amount` must be set in constructor. Other properties can be assigned directly.
  */
 class PaymentRequestCreate
 {
