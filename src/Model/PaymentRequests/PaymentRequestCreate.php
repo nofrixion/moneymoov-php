@@ -16,8 +16,8 @@ class PaymentRequestCreate
     public string $amount;
     public ?string $currency = null;
     public ?string $paymentMethodTypes;
-    public ?string $CustomerID;
-    public ?string $OrderID;
+    public ?string $customerID;
+    public ?string $orderID;
     public ?string $description;
     public ?string $pispAccountID;
     public ?string $shippingFirstName;
