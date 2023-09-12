@@ -14,8 +14,8 @@ class PaymentRequestCreate
 {
     public ?string $merchantID;
     public string $amount;
-    public string $currency;
-    public string $paymentMethodTypes;
+    public ?string $currency = null;
+    public ?string $paymentMethodTypes;
     public ?string $CustomerID;
     public ?string $OrderID;
     public ?string $description;
@@ -55,14 +55,9 @@ class PaymentRequestCreate
     public ?array $tags;
 
     public function __construct(
-        string $amount,
-        string $currency = "EUR",
-        string $paymentMethodTypes = "pisp"
+        string $amount
     )
     {
         $this->amount = $amount;
-        $this->currency = $currency;
-        $this->paymentMethodTypes = $paymentMethodTypes;
-        
     }
 }
