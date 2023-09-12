@@ -94,6 +94,11 @@ class PaymentRequest
                     $this->addresses = $value;
                     break;
                 case "result":
+                    if (array_key_exists('customerID', $value)){
+                        $customerID = $value['customerID'];
+                    } else {
+                        $customerID = null;
+                    }
                     $this->result = new PaymentRequestResult(
                         $value['paymentRequestID'],
                         $value['amount'],
@@ -102,7 +107,7 @@ class PaymentRequest
                         $value['requestedAmount'],
                         $value['payments'],
                         $value['pispAuthorizations'],
-                        $value['customerID']
+                        $customerID
                     );
                     break;
                 case "shippingAddress":

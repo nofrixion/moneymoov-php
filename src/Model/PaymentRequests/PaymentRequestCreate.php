@@ -7,17 +7,17 @@ namespace Nofrixion\Model\PaymentRequests;
 use Nofrixion\Util\PreciseNumber;
 
 /**
- * PaymentRequestCreate - use to create payment request, at minimum MerchantID, amount, currency and paymentMethodTypes
- *  must be set in constructor. Other properties can be assigned direclty.
+ * PaymentRequestCreate - use to create payment request.
+ *  `amount` must be set in constructor. Other properties can be assigned directly.
  */
 class PaymentRequestCreate
 {
-    public string $merchantID;
+    public ?string $merchantID;
     public string $amount;
-    public string $currency;
-    public string $paymentMethodTypes;
-    public ?string $CustomerID;
-    public ?string $OrderID;
+    public ?string $currency = null;
+    public ?string $paymentMethodTypes;
+    public ?string $customerID;
+    public ?string $orderID;
     public ?string $description;
     public ?string $pispAccountID;
     public ?string $shippingFirstName;
@@ -55,16 +55,9 @@ class PaymentRequestCreate
     public ?array $tags;
 
     public function __construct(
-        string $merchantID,
-        string $amount,
-        string $currency = "EUR",
-        string $paymentMethodTypes = "pisp"
+        string $amount
     )
     {
-        $this->merchantID = $merchantID;
         $this->amount = $amount;
-        $this->currency = $currency;
-        $this->paymentMethodTypes = $paymentMethodTypes;
-        
     }
 }
