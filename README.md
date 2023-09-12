@@ -38,8 +38,7 @@ $token = getenv("MERCHANT_TOKEN_SANDBOX");
 
 $client = new PaymentRequestClient($apiUrl, $token);
 
-// Creating a Payment request
-//  - required fields: amount, currency (default="EUR") and paymentMethodTypes (default="pisp") can be passed to the constructor.
+// Creating a Payment request (payment amount is required).
 $amount = new PreciseNumber("1.11");
 $newPaymentRequest = new PaymentRequestCreate($amount->__toString());
 
