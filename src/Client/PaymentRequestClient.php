@@ -148,7 +148,6 @@ class PaymentRequestClient extends AbstractClient
         $url = $this->getApiUrl() . 'paymentrequests/' . urlencode($paymentRequestId) . '/pisp';
         $headers = $this->getRequestHeaders();
         $method = 'POST';
-        $response = $this->getHttpClient()->request($method, $url, $headers);
 
         if (!is_null($amount)) {
             $amount = $amount->__toString();
